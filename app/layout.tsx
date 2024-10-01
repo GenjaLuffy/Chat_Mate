@@ -1,22 +1,40 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import './globals.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import ToasterContext from './context/ToasterContext';
+import AuthContextProvider from './context/AuthContext';
+import ActiveStatus from './components/ActiveStatus';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "ChatMate",
-  description: "",
+  title: 'ChatMate',
+  description:
+      'Chat Application For You',
+  icons:{
+    icon: '/favicon.png',
+  },
+  keywords: [],
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@prabhatgrg @pawonshrestha',
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AuthContextProvider>
+          <ToasterContext />
+          <ActiveStatus />
+          {children}
+        </AuthContextProvider>
+      </body>
     </html>
   );
 }
